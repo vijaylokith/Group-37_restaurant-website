@@ -1,2 +1,3 @@
 # Group-37_restaurant-website
-Restaurant websita
+Restaurant website
+(Table Booking - Food Ordering - Delivery Tracking)
