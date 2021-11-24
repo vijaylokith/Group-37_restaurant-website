@@ -9,7 +9,7 @@
         <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
 
         <!--========== CSS ==========-->
-        <link rel="stylesheet" href="assets/css/styles.css">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/css/styles.css') }}">
 
         <title>Table Reservation</title>
 </head>
@@ -28,11 +28,17 @@
 
         <div class="nav__menu" id="nav-menu">
             <ul class="nav__list">
-                <li class="nav__item"><a href="index.html" class="nav__link active-link">Home</a></li>
+                <li class="nav__item"><a href="{{ url_for('home_page' )}}" class="nav__link active-link">Home</a></li>
                 <li class="nav__item"><a href="index.html#about" class="nav__link">About</a></li>
                 <li class="nav__item"><a href="index.html#services" class="nav__link">Services</a></li>
-                <li class="nav__item"><a href="login.html" class="nav__link">Log in</a></li>
-                <li class="nav__item"><a href="login.html" class="nav__link">Register</a></li>
+                <!-- <li class="nav__item"><a href="login.html" class="nav__link">Log in</a></li>
+                <li class="nav__item"><a href="login.html" class="nav__link">Register</a></li> -->
+                {% if current_user.is_authenticated %}
+                <li class="nav__item"><a href="{{ url_for('logout') }}" class="nav__link">Log Out</a></li>
+                {% else %}
+                <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Log in</a></li>
+                <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Register</a></li>
+                {% endif %}
                 <li class="nav__item"><a href="index.html#contact" class="nav__link">Contact us</a></li>
 
                 <li><i class='bx bx-moon change-theme' id="theme-button"></i></li>
@@ -62,70 +68,25 @@
         <th></th>
     </tr>
     </thead>
+    
     <tbody>
-    <tr>
-        <td>1</td>
-        <td>9:00-10:00 am</td>
-        <td>23/10/21 </td>
-        <td>4</td>
-        <td><a href ='#' class = 'button'>Reserve</a></td>
-
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>1:00 - 2:00 pm</td>
-      <td>23/10/21 </td>
-      <td>4</td>
-      <td><a href ='#' class = 'button'>Reserve</a></td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>10:00-11:00 am</td>
-        <td>23/10/21 </td>
-        <td>4</td>
-        <td><a href ='#' class = 'button'>Reserve</a></td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>11:00-12:00 pm</td>
-        <td>23/10/21 </td>
-        <td>4</td>
-        <td><a href ='#' class = 'button'>Reserve</a></td>
-
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>9:00 - 10:00 am</td>
-      <td>23/10/21 </td>
-      <td>4</td>
-      <td><a href ='#' class = 'button'>Reserve</a></td>
-
-  </tr>
-    <tr>
-        <td>4</td>
-        <td>12:00-1:00 pm</td>
-        <td>23/10/21 </td>
-        <td>4</td>
-        <td><a href ='#' class = 'button'>Reserve</a></td>
-
-    </tr>
-    <tr>
-        <td>5</td>
-        <td>1:00 - 2:00 pm</td>
-        <td>23/10/21 </td>
-        <td>4</td>
-        <td><a href ='#' class = 'button'>Reserve</a></td>
-    </tr>
-    <tr>
-        <td>6</td>
-        <td>9:00 - 10:00 am</td>
-        <td>23/10/21 </td>
-        <td>4</td>
-        <td><a href ='#' class = 'button'>Reserve</a></td>
-
-    </tr>
+    {% for table in tables %}
+        <tr>
+            <td>{{ table.table }}</td>
+            <td>{{ table.time }}</td>
+            <td>{{ table.date }}</td>
+            <td>{{ table.accomodation }}</td>
+            <td>
+                <!-- <a href ='#' class = 'button'>Reserve</a> -->
+                <form method = 'POST'>
+                    {{ reserve_form.hidden_tag() }}
+                    <input id="reserved_table" name="reserved_table" type="hidden" value="{{ table.table }}">
+                    {{ reserve_form.submit(class = 'button') }}
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
     </tbody>
-
 </table>
 <!-- TABLE ENDS -->
 
@@ -185,4 +146,3 @@
 </body>
 
 </html>
-
