@@ -8,7 +8,7 @@
         <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
 
         <!--========== CSS ==========-->
-        <link rel="stylesheet" href="assets/css/styles.css">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/css/styles.css') }}">
 
         <title>Silver Leaf</title>
     </head>
@@ -26,12 +26,18 @@
 
                 <div class="nav__menu" id="nav-menu">
                     <ul class="nav__list">
-                        <li class="nav_item"><a href="#home" class="nav_link active-link">Home</a></li>
-                        <li class="nav_item"><a href="#about" class="nav_link">About</a></li>
-                        <li class="nav_item"><a href="#services" class="nav_link">Services</a></li>
-                        <li class="nav_item"><a href="login.html" class="nav_link">Log in</a></li>
-                        <li class="nav_item"><a href="login.html" class="nav_link">Register</a></li>
-                        <li class="nav_item"><a href="#contact" class="nav_link">Contact us</a></li>
+                        <li class="nav__item"><a href="#home" class="nav__link active-link">Home</a></li>
+                        <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
+                        <li class="nav__item"><a href="#services" class="nav__link">Services</a></li>
+                        <!-- <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Log in</a></li>
+                        <li class="nav__item"><a href="{{ url_for('register_page') }}" class="nav__link">Register</a></li> -->
+                        {% if current_user.is_authenticated %}
+                        <li class="nav__item"><a href="{{ url_for('logout') }}" class="nav__link">Log Out</a></li>
+                        {% else %}
+                        <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Log in</a></li>
+                        <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Register</a></li>
+                        {% endif %}
+                        <li class="nav__item"><a href="#contact" class="nav__link">Contact us</a></li>
 
                         <li><i class='bx bx-moon change-theme' id="theme-button"></i></li>
                     </ul>
@@ -51,12 +57,12 @@
                     <div class="home__data">
                         <h1 class="home__title">Welcome!<br>Try our food</h1>
                         <h3 class="home__subtitle">Nothing brings people together like good food.</h3>
-                        <a href="menu.html" class="button">View Menu</a>
-                        <a href="table.html" class="button">Reserve Table</a>
-                    <!--     <a href="table.html" class="button">Track Order</a> -->
+                        <a href="{{ url_for('menu_page') }}" class="button">View Menu</a>
+                        <a href="{{ url_for('table_page') }}" class="button">Reserve Table</a>
+                        <a href="{{ url_for('track_page') }}" class="button">Track Order</a>
                     </div>
-
-                    <img src="assets/img/home.png" alt="" class="home__img">
+                    
+                    <img src="{{url_for('static', filename='styles/img/home.png')}}" alt = "" class="home__img">
                 </div>
             </section>
 
@@ -70,7 +76,7 @@
                         <a href="#" class="button">Explore history</a>
                     </div>
 
-                    <img src="assets/img/about.jpg" alt="" class="about__img">
+                    <img src="static/styles/img/about.jpg" alt="" class="about__img">
                 </div>
             </section>
 
@@ -435,6 +441,6 @@
         <script src="https://unpkg.com/scrollreveal"></script>
 
         <!--========== MAIN JS ==========-->
-        <script src="assets/js/main.js"></script>
+        <script src="static/styles/js/main.js"></script>
     </body>
 </html>
