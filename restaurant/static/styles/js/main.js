@@ -115,3 +115,7 @@ function loader(){
   }
 
   window.onload = fadeOut;
+
+
+
+
